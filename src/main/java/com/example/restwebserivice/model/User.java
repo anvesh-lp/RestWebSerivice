@@ -1,11 +1,23 @@
 package com.example.restwebserivice.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
 import java.time.LocalDate;
 
+@Entity(name = "User_details")
 public class User {
+    @Id
+    @GeneratedValue
     private Integer id;
     private String name;
     private LocalDate birthDate;
+
+    public User() {
+    }
+
+    ;
 
     public User(Integer id, String name, LocalDate birthDate) {
         this.id = id;

@@ -4,6 +4,7 @@ package com.example.restwebserivice.controllers;
 import com.example.restwebserivice.exeptions.UserNotFoundException;
 import com.example.restwebserivice.model.User;
 import com.example.restwebserivice.services.UserDaoService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -35,7 +36,7 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         User savedUser = userService.saveUser(user);
 
         System.out.println(userService.getUsersList().size());
