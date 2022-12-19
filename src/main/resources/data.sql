@@ -12,12 +12,12 @@ insert into User_details
 values (1006, current_date(), 'Nandhan');
 
 insert into post (id, description, user_id)
-values (1, 'first post', 1001);
+values (2001, 'first post', 1001);
 insert into post (id, description, user_id)
-values (2, 'second post', 1001);
+values (2002, 'second post', 1001);
 insert into post (id, description, user_id)
-values (3, 'third post', 1001);
+values (2003, 'third post', 1001);
 insert into post (id, description, user_id)
-values (4, 'first post', 1002);
+values (2004, 'first post', 1002);
 insert into post (id, description, user_id)
-values (5, 'second post', 1002);
+values (2005, 'second post', 1002);

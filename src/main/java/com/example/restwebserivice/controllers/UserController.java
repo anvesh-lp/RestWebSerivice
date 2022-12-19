@@ -4,6 +4,7 @@ package com.example.restwebserivice.controllers;
 import com.example.restwebserivice.exeptions.UserNotFoundException;
 import com.example.restwebserivice.model.Post;
 import com.example.restwebserivice.model.User;
+import com.example.restwebserivice.repositories.PostRepository;
 import com.example.restwebserivice.repositories.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +20,11 @@ public class UserController {
 
 
     private final UserRepository userRepositoryImp;
+    private final PostRepository postRepositoryImp;
 
-    public UserController(UserRepository repo) {
+    public UserController(UserRepository repo, PostRepository postRepositoryImp) {
         this.userRepositoryImp = repo;
+        this.postRepositoryImp = postRepositoryImp;
     }
 
     @GetMapping(path = "/users")
@@ -66,6 +69,26 @@ public class UserController {
             throw new UserNotFoundException("User Not found");
         }
         return user.get().getPosts();
+    }
+
+    @PostMapping("/users/{id}/posts")
+    public ResponseEntity<Post> createPost(@Valid @PathVariable int id, @RequestBody Post post) {
+        Optional<User> user = userRepositoryImp.findById(id);
+
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("User Not found");
+        }
+        System.out.println(user.get());
+        post.setUser(user.get());
+
+        Post savedPost = postRepositoryImp.save(post);
+
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(savedPost.getId())
+                .toUri();
+        return ResponseEntity.created(location).build();
     }
 
 }
